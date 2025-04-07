@@ -66,11 +66,12 @@ def calculate_total():
         print(f"Delivery Fee: ${delivery_fee:.2f}")
     print(f"Total Amount Due: ${total:.2f}")
 
-def summary_order(menu_type):
-    """Function to display the summary of the customer's order based on menu type."""
+def summary_order():
+    """Function to display the summary of the customer's order."""
     if not final_order:
         print("\nNo items in the order yet.")
         return
+    menu_type = input("Would you like to see the food or drinks summary? (food/drinks/all): ").lower()
     print("\nOrder Summary:")
     subtotal = 0
     for item, quantity in final_order.items():
@@ -78,11 +79,15 @@ def summary_order(menu_type):
             continue
         if menu_type == "drinks" and item not in drinks_menu:
             continue
+        if menu_type not in ["food", "drinks", "all"]:
+            print("Invalid choice. Showing all items.")
+            menu_type = "all"
         price = food_menu.get(item, drinks_menu.get(item, 0))
         item_total = price * quantity
         subtotal += item_total
         print(f"{item} x{quantity} = ${item_total:.2f}")
     print(f"\nSubtotal: ${subtotal:.2f}")
+
 
 def home():
     """Main menu system."""
